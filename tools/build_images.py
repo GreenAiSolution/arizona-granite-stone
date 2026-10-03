@@ -1,7 +1,7 @@
 """Resize the client's original photos (assets/orig) into web sizes (assets/img).
 Run: python3 tools/build_images.py   (needs Pillow)"""
 from pathlib import Path
-from PIL import Image, ImageOps, ImageDraw
+from PIL import Image, ImageOps, ImageDraw, ImageEnhance
 import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -36,18 +36,29 @@ PHOTOS = {
     "seam-repair":       ("IMG_6467.jpeg", None, [600, 900, 1600]),
     "cabinets-ready":    ("IMG_6442.jpeg", None, [600, 900, 1600]),
     "sink-in-shop":      ("IMG_6601.jpeg", None, [600, 900, 1600]),
+    "quartz-closeup":    ("IMG_6508.jpeg", (300, 1150, 1500, 2050), [600, 900]),  # step 2: the stone itself, 4:3
 }
 for slug, (f, crop, ws) in PHOTOS.items():
     save(load(f, crop), slug, ws)
 
-# Real slab swatches cropped from their own jobs (material cards)
+# Real slab swatches cropped from their own jobs (material cards). 16:10, at least 800px wide so
+# they stay crisp on Retina. The marble photo has a blue cast from the window; neutralise it.
+def neutralise(im, strength=0.85):
+    """Gray-world white balance: scale each channel so the crop's mean is neutral."""
+    stat = [sum(ch) / len(ch) for ch in (im.split()[i].getdata() for i in range(3))]
+    g = sum(stat) / 3
+    gains = [1 + strength * (g / m - 1) for m in stat]
+    return im.point([min(255, round(i * gains[c])) for c in range(3) for i in range(256)])
+
 SWATCH = {
-    "swatch-marble":  ("IMG_8988.jpeg", (500, 1700, 1600, 2380)),
-    "swatch-quartz":  ("9f3396bc-944e-4504-acfa-ba191acde254.jpeg", (320, 1000, 680, 1260)),
-    "swatch-granite": ("IMG_6467.jpeg", (1380, 1560, 1900, 1950)),
+    "swatch-marble":  ("IMG_8988.jpeg", (480, 1540, 1760, 2340), True),
+    "swatch-quartz":  ("IMG_6508.jpeg", (600, 1150, 1400, 1650), True),  # the island top, clear of the cooktop; room light is greenish
+    "swatch-granite": ("IMG_6467.jpeg", (1050, 1420, 1890, 1945), False),
 }
-for slug, (f, crop) in SWATCH.items():
-    save(load(f, crop), slug, [700])
+for slug, (f, crop, wb) in SWATCH.items():
+    im = load(f, crop)
+    if wb: im = ImageEnhance.Brightness(neutralise(im)).enhance(1.06)
+    save(im, slug, [900])
 
 # Logo: knock out the white background outside the badge (flood from corners)
 logo = Image.open(SRC / "IMG_9046.jpeg").convert("RGB")
