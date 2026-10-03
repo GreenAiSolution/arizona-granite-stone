@@ -26,7 +26,7 @@ To finish it I need a few things from you:
 1. Reviews. Send me 3–5 real ones (customer name + what they said). That section stays hidden until we have real ones.
 2. The "Fantasy brown kitchen" video file, if you still have it.
 3. More photos, if you have them: outdoor kitchens/BBQs, fireplaces, jacuzzi surrounds, a full slab on a wall, finished kitchens, your showroom.
-4. What days the 7 am – 5 pm hours apply to.
+4. What days the 7 am – 5 pm hours apply to, and how far out you'll travel (the site says Waddell and the West Valley).
 5. When you send your first test through the form, you'll get an email from FormSubmit asking you to activate it. Click that once, or quote requests won't reach you.
 
 When you're happy with it, I'll point arizonagraniteandstone.com to the new site. It takes about 10 minutes, and I'll walk you through the GoDaddy step on the phone. Your current site stays up until that moment.
