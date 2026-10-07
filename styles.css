@@ -464,3 +464,13 @@ p { margin: 0; }
   .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: none; }
 }
+
+
+/* ---------- Instagram strip: the shop's own posts, swipe sideways ---------- */
+.ig-strip { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 0 18px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--rule-strong) transparent; }
+.ig-item { flex: 0 0 330px; scroll-snap-align: start; min-height: 440px; }
+.ig-item .instagram-media { margin: 0 !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--rule); padding: 0; box-shadow: none !important; }
+.ig-item .instagram-media a { display: block; padding: 200px 16px; text-align: center; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em; text-decoration: none; color: var(--accent); }
+.ig-item iframe { border-radius: 14px !important; width: 100% !important; min-width: 0 !important; }
+.ig-foot { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+@media (max-width: 719px) { .ig-item { flex-basis: min(330px, 86vw); } }
